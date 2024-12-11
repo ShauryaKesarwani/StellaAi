@@ -2,6 +2,11 @@ import uiautomation as auto
 import pyautogui
 import asyncio
 import pythoncom
+from PySide6.QtGui import QPixmap, QCursor, QImageReader
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication
+from os import path
+from sys import argv
 
 class InputFieldText:
     """
@@ -11,8 +16,18 @@ class InputFieldText:
         """
         Initializes the InputFieldText class.
         """
+        app = QApplication(argv)
+        app.exec()
+        current_dir = path.dirname(path.abspath(__file__))
+        img_path = path.join(current_dir, '../Media/Magic Loading.png')
+        
+        global pixmap
+        pixmap = QPixmap(img_path)
+        # reader = QImageReader(img_path)
+        # reader.setAutoTransform(True)
+        # global image
+        # image = reader.read()
         pythoncom.CoInitialize()                        # type: ignore
-        pass
 
     async def show_popup(self, message):
         """
@@ -34,7 +49,7 @@ class InputFieldText:
         Returns:
             str: The text from the currently focused input field.
         """
-        
+        self._set_loading_cursor()
         await asyncio.sleep(0.1)
         self.element = auto.GetFocusedControl()
 
@@ -62,18 +77,31 @@ class InputFieldText:
         """
         
         # Try to set the value of the input field
+        self._restore_cursor()
         try:
-            self.element.GetValuePattern().SetValue(self.msg + message) # type: ignore
-        except AttributeError as e:
-            print("debug2", e)
+            #self.element.GetValuePattern().SetValue(self.msg + message) # type: ignore
             self.element.SetFocus() # type: ignore
             self.element.SendKeys(message, 0.02)             # type: ignore
+        except AttributeError as e:
+            print("debug2", e)
+            # self.element.SetFocus() # type: ignore
+            # self.element.SendKeys(message, 0.02)             # type: ignore
 
     def sync_test(self):
         asyncio.run(self.test())
 
-    async def main(self):
-        #await asyncio.gather()
-        pass
+    def _set_loading_cursor(self):
+        """Sets the spinning PNG as the mouse cursor."""
+        # global image
+        # pixmap = QPixmap.fromImage(image)
+        global pixmap
+        scaled_pixmap = pixmap.scaled(32, 32, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        QApplication.setOverrideCursor(QCursor(scaled_pixmap))
+        
+
+    def _restore_cursor(self):
+        """Restores the default mouse cursor."""
+        QApplication.restoreOverrideCursor()
+        #self.app.quit()
         
     # Run the async event loop
