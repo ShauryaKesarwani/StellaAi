@@ -16,13 +16,13 @@ class InputFieldText:
         """
         Initializes the InputFieldText class.
         """
-        app = QApplication(argv)
-        app.exec()
-        current_dir = path.dirname(path.abspath(__file__))
-        img_path = path.join(current_dir, '../Media/Magic Loading.png')
+        # app = QApplication(argv)
+        # app.exec()
+        # current_dir = path.dirname(path.abspath(__file__))
+        # img_path = path.join(current_dir, '../Media/Magic Loading.png')
         
-        global pixmap
-        pixmap = QPixmap(img_path)
+        # global pixmap
+        # pixmap = QPixmap(img_path)
         # reader = QImageReader(img_path)
         # reader.setAutoTransform(True)
         # global image
@@ -49,7 +49,7 @@ class InputFieldText:
         Returns:
             str: The text from the currently focused input field.
         """
-        self._set_loading_cursor()
+        # self._set_loading_cursor()
         await asyncio.sleep(0.1)
         self.element = auto.GetFocusedControl()
 
@@ -77,7 +77,7 @@ class InputFieldText:
         """
         
         # Try to set the value of the input field
-        self._restore_cursor()
+        # self._restore_cursor()
         try:
             #self.element.GetValuePattern().SetValue(self.msg + message) # type: ignore
             self.element.SetFocus() # type: ignore
@@ -90,18 +90,18 @@ class InputFieldText:
     def sync_test(self):
         asyncio.run(self.test())
 
-    def _set_loading_cursor(self):
-        """Sets the spinning PNG as the mouse cursor."""
+    # def _set_loading_cursor(self):
+    #     """Sets the spinning PNG as the mouse cursor."""
         # global image
         # pixmap = QPixmap.fromImage(image)
-        global pixmap
-        scaled_pixmap = pixmap.scaled(32, 32, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-        QApplication.setOverrideCursor(QCursor(scaled_pixmap))
+        # global pixmap
+        # scaled_pixmap = pixmap.scaled(32, 32, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        # QApplication.setOverrideCursor(QCursor(scaled_pixmap))
         
 
-    def _restore_cursor(self):
-        """Restores the default mouse cursor."""
-        QApplication.restoreOverrideCursor()
+    # def _restore_cursor(self):
+    #     """Restores the default mouse cursor."""
+    #     QApplication.restoreOverrideCursor()
         #self.app.quit()
         
     # Run the async event loop

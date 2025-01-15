@@ -163,3 +163,5 @@ cython_debug/
 #.idea/
 @AutomationLog.txt
 typing.txt
+gemini_search.py
+gemini_search2.py
