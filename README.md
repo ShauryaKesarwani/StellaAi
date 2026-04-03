@@ -7,5 +7,8 @@ and all features to be provided freely to as much as possible :)
 
 Almost everything you will see is a subject to change.
 
+To make in future:
+- Circle to Search in Windows/Linux as well
+
 ## Small clip Demonstration
 https://github.com/user-attachments/assets/c94ff518-6826-4c1a-b847-265ad2f8520e
